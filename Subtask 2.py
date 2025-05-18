@@ -7,7 +7,7 @@ Term: 2
 """
 from curses.ascii import isalpha
 
-# Goal: Simple project to retrieve and display components information test data
+# Goal: Validation of text data
 """Declare word for validation"""
 valid = True
 #Declare file
