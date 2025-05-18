@@ -5,7 +5,6 @@ Project Name: Task 2
 Date:10 May
 Term: 2
 """
-from curses.ascii import isalpha
 
 # Goal: Validation of text data
 """Declare word for validation"""
