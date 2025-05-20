@@ -48,10 +48,11 @@ def line_check(input_text, validation_file="validation_file.txt"):
             is_valid = validate_line(line)
             results.append((line.strip(), is_valid))
             if not is_valid:
-                f.write(f"{line.strip()}-> False\n")
+                f.write(f"{line.strip()}-> Invalid entry\n")
     return results
 
 results = line_check("components_data_ERR.txt")
 
 for line, is_valid in results:
-    print(f"{line}-> {is_valid}")
+    status = "Valid entry" if is_valid else "Invalid input"
+    print(f"{line}-> {status}")
