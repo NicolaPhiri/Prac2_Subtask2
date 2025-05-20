@@ -2,58 +2,56 @@
 Name: Nicola
 Surname: Phiri
 Project Name: Task 2
-Date:10 May
+Date:15 May
 Term: 2
 """
 
-# Goal: Validation of text data
-"""Declare word for validation"""
-valid = True
-#Declare file
+#Importing appropriate libraries for use
+# Goal: Simple project to retrieve and display components information test data
+
+#Create parameter
+def components_data_ERR():
+    return """C101,3.3
+              A202,2.9
+              B303,error
+              C404,3.1
+              C505
+              C10,3.3"""
+#Declare file & Call parameter into the text file
 try:
          with open("components_data_ERR.txt", "x") as file:
-             file.write("C101,3.3\n")
-             file.write("A202,2.9\n")
-             file.write("B303,error\n")
-             file.write("C404,3.1\n")
-             file.write("C505,\n")
-             file.write("C10,3.3\n")
+             file.write(components_data_ERR())
 
 # Defensive programming, making sure the program doesn't shut down because of an error.
 except FileExistsError:
-    file = open("components_data_ERR.txt", "r")
-    print("File already exists")
-    file.close()
+   file = open("components_data_ERR.txt", "r")
+print("File already exists")
+pass #That's if the file already exists
 
-#Implement Validation and parameter
-def component1(ID):
-    print(f"ID: {ID}")
+#Implement Validation
+#1)Must contain numbers and must be 4 characters long
+def validate_line(line):
+    try:
+        comp_id, voltage = line.strip().split(",")
+        float(voltage) #2)check if the voltage is entered and if it's a numeric
+        return len(comp_id) == 4
+    except ValueError:
+        return False
 
-def component2(Voltage):
-    print(f"Voltage: {Voltage}")
+def line_check(input_text, validation_file="validation_file.txt"):
+    results=[]
+    with open(input_text, "r") as f:
+        lines =f.readlines()
 
-#Create Validation
-def validate_file(line):
-    components = line.strip().split(',')
-    if component1() != isalpha():
-        print("Not an alphaneumeric value!")
+    with open(validation_file,"w")as f:
+        for line in lines:
+            is_valid = validate_line(line)
+            results.append((line.strip(), is_valid))
+            if not is_valid:
+                f.write(f"{line.strip()}-> False\n")
+    return results
 
-    else:
-        len(components)!= 4
-        return False, print("Does not contain 4 characters")
+results = line_check("components_data_ERR.txt")
 
-#Make sure that what has been entered is a numeric
-def is_numeric():
-    # Make sure that what has been entered is a numeric
-    def is_numeric(voltage):
-        try:
-            float(voltage)
-            return True
-        except ValueError:
-            return False
-            print("Is not numeric!")
-
-"""FIX UP THE CODE. CORRECT VALIDATION STEPS.
-I THINK YOUR VALIDATIONS NEED TO BE CALLED INTO A FUNCTION.
-RESEARCH IT AND SEE HOW YOU COULD INDIVIDUALLY MEET THE REQUIREMENTS FOR EACH
-INDIVIDUAL VALIDATION. I DON'T THINK VALIDATION OUTSIDE A FUNCTION IS POSSIBLE."""
+for line, is_valid in results:
+    print(f"{line}-> {is_valid}")
